@@ -38,4 +38,5 @@ jobs:
         run: chmod +x ./android/gradlew
 
       - name: Build with Gradle
+        working-directory: ./android
         run: ./gradlew assembleDebug
