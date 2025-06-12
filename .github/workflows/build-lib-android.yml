@@ -2,14 +2,13 @@ name: Build Android Library
 
 on:
   push:
-    branches:
-      - main  # Trigger on push to the main branch
+    branches: [ "*" ]
   pull_request:
-    branches:
-      - main  # Trigger on pull requests targeting the main branch
+    branches: [ "*" ]
 
 jobs:
   build:
+    name: Build Android Library
     runs-on: ubuntu-latest  # Use Ubuntu as the CI runner
     
     steps:
@@ -39,7 +38,7 @@ jobs:
           cmake --build .
           
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-lib
           path: build/
