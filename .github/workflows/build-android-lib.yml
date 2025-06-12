@@ -21,21 +21,11 @@ jobs:
 
       - name: Set up Android NDK
         uses: android-actions/setup-android@v2
-        with:
-          ndk-version: '25.2.9519653'  # Latest stable NDK version
 
       - name: Build C++ library
         run: |
           # Navigate to lib directory
           cd lib
-
-          # Generate CMakeLists.txt
-          cat > CMakeLists.txt <<EOF
-          cmake_minimum_required(VERSION 3.22.1)
-          project(MyLib)
-
-          add_library(my-lib STATIC version.h)
-          EOF
 
           # Build for Android (ARM64)
           mkdir build && cd build
