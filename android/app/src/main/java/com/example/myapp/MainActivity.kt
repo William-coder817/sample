@@ -24,9 +24,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        // Display the version in a TextView
-        findViewById<TextView>(R.id.version_text).text = "Native Version: ${getNativeVersion()}"
+        setContent {
+            MyAppTheme {
+                AppScreen(version = getNativeVersion())
+            }
+        }
     }
 }
