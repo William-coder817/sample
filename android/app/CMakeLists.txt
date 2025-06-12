@@ -11,5 +11,3 @@ add_library(
 
 # Link to your header-only library
 target_link_libraries(native-lib PRIVATE my-lib)
-
-target_link_libraries(native-lib android log)
