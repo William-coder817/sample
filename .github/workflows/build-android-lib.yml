@@ -46,7 +46,7 @@ jobs:
           cmake --build .
 
       - name: Upload artifact (optional)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-lib
           path: lib/build/libmy-lib.a
