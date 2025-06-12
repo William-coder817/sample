@@ -27,7 +27,7 @@ jobs:
       - name: Build C++ library
         run: |
           # Navigate to lib directory
-          cd ../lib
+          cd lib
 
           # Generate CMakeLists.txt
           cat > CMakeLists.txt <<EOF
