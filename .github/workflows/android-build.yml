@@ -37,6 +37,13 @@ jobs:
       - name: Grant execute permission for Gradle wrapper
         run: chmod +x ./android/gradlew
 
+      - name: Build my-lib
+        run: |
+          cd lib
+          mkdir -p build && cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+
       - name: Build with Gradle
         working-directory: ./android
         run: ./gradlew assembleDebug
