@@ -19,13 +19,13 @@ android {
 
         externalNativeBuild {
             cmake {
-                cppFlags = "-std=c++17"
+                cppFlags "-std=c++17"
             }
         }
     }
     externalNativeBuild {
         cmake {
-            path = "CMakeLists.txt"
+            path "CMakeLists.txt"
         }
     }
 
