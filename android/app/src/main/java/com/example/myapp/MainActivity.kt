@@ -1,46 +1,32 @@
 package com.example.myapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.databinding.ActivityMainBinding
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.myapp.ui.theme.MyAppTheme
 
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
-
+class MainActivity : ComponentActivity() {
     companion object {
         init {
-            System.loadLibrary("native-lib") // Load native library
+            System.loadLibrary("native-lib")  // Load the C++ library
         }
     }
 
-    // Native method declaration
     private external fun getNativeVersion(): String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        displayNativeVersion()
-    }
-
-    private fun displayNativeVersion() {
-        try {
-            val version = getNativeVersion()
-            updateVersionText("Native Version: $version")
-        } catch (e: UnsatisfiedLinkError) {
-            updateVersionText("Error: Native library not loaded")
-            e.printStackTrace()
-        } catch (e: Exception) {
-            updateVersionText("Error: ${e.localizedMessage}")
-            e.printStackTrace()
-        }
-    }
-
-    private fun updateVersionText(text: String) {
-        runOnUiThread {
-            binding.versionText.text = text
-        }
+        // Display the version in a TextView
+        findViewById<TextView>(R.id.version_text).text = "Native Version: ${getNativeVersion()}"
     }
 }
