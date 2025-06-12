@@ -14,6 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.myapp.ui.theme.MyAppTheme
 
 class MainActivity : ComponentActivity() {
+    companion object {
+        init {
+            System.loadLibrary("native-lib")  // Load the C++ library
+        }
+    }
+
+    private external fun getNativeVersion(): String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,7 +29,7 @@ class MainActivity : ComponentActivity() {
             MyAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        version = ${getNativeVersion()},
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,9 +39,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(version: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
+        text = "Version: $name",
         modifier = modifier
     )
 }

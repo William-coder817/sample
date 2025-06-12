@@ -1,8 +1,7 @@
-// version.h
-#ifndef VERSION_H
-#define VERSION_H
+#pragma once
+#include <string>
 
-// Define a version string
-const std::string VERSION = "1.0.0";
-
-#endif // VERSION_H
+// Return version as a C-style string (better for JNI)
+const char* GetAppVersion() {
+    return "1.0.0";
+}
