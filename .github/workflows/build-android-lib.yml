@@ -13,32 +13,31 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Set up JDK (optional, if needed)
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
 
       - name: Set up Android NDK
-        uses: android-actions/setup-android-ndk@v1
+        uses: android-actions/setup-android@v2
         with:
-          ndk-version: '25.2.9519653'  # Latest LTS version as of 2024
+          ndk-version: '25.2.9519653'  # Latest stable NDK version
 
       - name: Build C++ library
         run: |
           # Navigate to lib directory
           cd lib
 
-          # Create a minimal CMakeLists.txt for the library
+          # Generate CMakeLists.txt
           cat > CMakeLists.txt <<EOF
           cmake_minimum_required(VERSION 3.22.1)
           project(MyLib)
 
-          add_library(my-lib STATIC)
-          target_sources(my-lib PRIVATE version.h)
+          add_library(my-lib STATIC version.h)
           EOF
 
-          # Build for Android (ARM64 example)
+          # Build for Android (ARM64)
           mkdir build && cd build
           cmake .. \
             -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake \
@@ -46,8 +45,8 @@ jobs:
             -DANDROID_NATIVE_API_LEVEL=21
           cmake --build .
 
-      - name: Upload artifacts (optional)
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact (optional)
+        uses: actions/upload-artifact@v3
         with:
           name: android-lib
-          path: lib/build/libmy-lib.a  # Path to the built library
+          path: lib/build/libmy-lib.a
