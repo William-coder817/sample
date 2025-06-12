@@ -1,0 +1,46 @@
+name: Build Android Library
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use Ubuntu as the CI runner
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Android SDK and NDK
+        uses: hyc/jdk15-android-setup@v1.0
+        with:
+          ndk_version: "21.3.6528147"  # You can specify the version of the NDK
+
+      - name: Set up CMake
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake
+
+      - name: Build Android NDK Project
+        run: |
+          mkdir build
+          cd build
+          # Set up your Android NDK toolchain for your target architecture (arm64-v8a, armeabi-v7a, etc.)
+          cmake -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake \
+                -DANDROID_ABI=arm64-v8a \
+                -DANDROID_PLATFORM=android-21 \
+                -DCMAKE_BUILD_TYPE=Release \
+                ..
+          cmake --build .
+          
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-lib
+          path: build/
+          
