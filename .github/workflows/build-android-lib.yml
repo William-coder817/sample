@@ -39,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-lib
-          path: lib/build/libmy-lib.a
+          path: lib/build/my-lib.so
