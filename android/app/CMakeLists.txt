@@ -6,6 +6,3 @@ include_directories(../../lib)
 
 add_library(native-lib SHARED src/main/cpp/native-lib.cpp)
 target_include_directories(native-lib PRIVATE ../../lib)
-
-# Link libraries if needed
-target_link_libraries(native-lib)
