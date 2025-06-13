@@ -1,16 +1,11 @@
 cmake_minimum_required(VERSION 3.22.1)
-project(native-lib LANGUAGES CXX)
+project("MyApp")
 
-# Include your lib directory
-set(MY_LIB_PATH "../lib/build/my-lib.a")
+# Add the /lib directory to include paths
+include_directories(../../lib)
 
-add_library(
-    native-lib
-    SHARED
-    src/main/cpp/native-lib.cpp)
+# (Optional) Create a library or link to existing code
+add_library(native-lib SHARED src/main/cpp/native-lib.cpp)
 
-# Link to your header-only library
-target_link_libraries(native-lib
-    "../lib/build/my-lib.a"
-    android
-    log)
+# Link libraries if needed
+target_link_libraries(native-lib)
